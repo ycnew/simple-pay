@@ -195,15 +195,6 @@ public class WechatPayHandler extends AbstractHandler implements IPayHandler {
 
 			//判断resultCode
 			if (!wechatMicroPayResponse.isResultCodeSuccess()) {
-				//明确失败
-				if(wechatMicroPayResponse.isResultCodeFail()){
-					setCodeAndMessage(barcodePayResponseBo,
-							ErrorCodeEnum.WECHAT_BARCODE_PAY_FAIL,
-							wechatMicroPayResponse.getErrCode(),
-							wechatMicroPayResponse.getErrCodeDes()
-					);
-					return barcodePayResponseBo;
-				}
 				//循环查询订单是否成功
 				return loopBarcodePayQuery(barcodePayRequestBo,MAX_BARCODE_PAY_QUERY);
 			}
