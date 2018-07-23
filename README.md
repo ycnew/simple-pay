@@ -27,7 +27,7 @@ QQ交流群：826351281
 * JAVA平台: JRE1.8+
 * 操作系统：Windows、Linux等
 
-## 系统演示
+#### 系统演示
 体验simple-pay, 请访问 [https://www.42pay.cn](https://www.42pay.cn)<br>
 一. 注册新的帐号<br>
 二. 配置支付参数
