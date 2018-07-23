@@ -59,7 +59,7 @@ QQ交流群：826351281
 ```
 http://域名/mobile/order/webPayOrderInfo?userId=用户ID
 ```
-![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E8%B7%B3%E8%BD%AC%E8%BE%93%E5%85%A5%E9%87%91%E9%A2%9D.PNG "简单付，Wap支付")
+![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E8%B7%B3%E8%BD%AC%E8%BE%93%E5%85%A5%E9%87%91%E9%A2%9D.PNG "简单付，Wap支付")<br/>
 二：WAP支付(直接唤起支付宝或微信收银台)
 ```
 http://域名/mobile/order/webPayOrderInfo?userId=用户ID&payAmount=金额(最小单位：分)
@@ -68,7 +68,7 @@ http://域名/mobile/order/webPayOrderInfo?userId=用户ID&payAmount=金额(最�
 ```
 http://域名/mobile/order/barcodePayOrderInfo?userId=用户ID
 ```
-![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E6%9D%A1%E7%A0%81%E4%BB%98.PNG "简单付，条码支付")
+![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E6%9D%A1%E7%A0%81%E4%BB%98.PNG "简单付，条码支付")<br/>
 四：条码支付（直接扣款）
 ```
 http://域名//mobile/order/barcodePayOrderInfo?userId=用户ID&payAmount=金额(最小单位：分)&barcode=支付条码
@@ -84,15 +84,15 @@ http://域名/mobile/payment/personalTransfer?userId=用户ID
 三：直接执行java -jar -server simple-pay-0.0.1-SNAPSHOT.jar<br>
 四：端口默认监听在7878上面,访问http://[域名|ip]:端口<br>
 五：注册用户<br>
-![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E6%B3%A8%E5%86%8C.png "简单付，注册")
+![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E6%B3%A8%E5%86%8C.png "简单付，注册")<br/>
 六：配置微信支付参数<br>
-![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E9%85%8D%E7%BD%AE.png "简单付，微信配置")
+![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E9%85%8D%E7%BD%AE.png "简单付，微信配置")<br/>
 七：配置支付宝支付参数<br>
-![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D%E9%85%8D%E7%BD%AE.png "简单付，支付宝配置")
+![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D%E9%85%8D%E7%BD%AE.png "简单付，支付宝配置")<br/>
 八：获取个人支付二维码<br>
-![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E6%88%91%E7%9A%84%E6%94%B6%E6%AC%BE%E4%BA%8C%E7%BB%B4%E7%A0%81.png "简单付，获取个人二维码")
+![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E6%88%91%E7%9A%84%E6%94%B6%E6%AC%BE%E4%BA%8C%E7%BB%B4%E7%A0%81.png "简单付，获取个人二维码")<br/>
 九：查看交易记录<br>
-![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E4%BA%A4%E6%98%93%E8%AE%B0%E5%BD%95%E6%9F%A5%E8%AF%A2.png "简单付，查看交易记录")
+![输入图片说明](http://7xno76.com1.z0.glb.clouddn.com/%E4%BA%A4%E6%98%93%E8%AE%B0%E5%BD%95%E6%9F%A5%E8%AF%A2.png "简单付，查看交易记录")<br/>
 
 #### 商户回调签名说明
 收到第三方支付回调后，会转换成统一的参数，对参数进行ASCII码升序排序，取里面的值+设置到后台的Key，用MD5算一个签名<br>
