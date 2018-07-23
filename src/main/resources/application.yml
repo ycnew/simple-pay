@@ -1,0 +1,103 @@
+
+server:
+  port: 7878
+  session-timeout: 60
+  connection-timeout: 5000
+---
+jetty:
+    threadPool:
+        maxThreads: 200
+        minThreads: 10
+        idleTimeout: 6000
+---
+druid:
+  datasource:
+    driverClassName : com.mysql.jdbc.Driver
+    url : jdbc:mysql://127.0.0.1:3306/simple_pay?useUnicode=true&characterEncoding=utf-8
+    username : root
+    password : 123456
+
+    #<!-- 配置初始化大小、最小、最大 -->
+    initialSize : 0
+    minIdle : 1
+    maxActive : 20
+
+    #<!-- 配置获取连接等待超时的时间 -->
+    maxWait : 60000
+
+    #<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    timeBetweenEvictionRunsMillis : 60000
+
+    #<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    minEvictableIdleTimeMillis : 300000
+    validationQuery : SELECT 'x'
+    testWhileIdle : true
+    testOnBorrow : false
+    testOnReturn : false
+
+    #<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    poolPreparedStatements : true
+    maxPoolPreparedStatementPerConnectionSize : 20
+
+    #<!-- 配置监控统计拦截的filters -->
+    filters : stat
+---
+mybatis:
+   mapperLocations: classpath:/mybatis/mapper/*.xml
+   typeAliasesPackage: cn._42pay.simplepay.entity
+   configLocation: classpath:/mybatis/mybatis-config.xml
+#  # configLocation: classpath: mybatis.xml
+---
+spring:
+  freemarker:
+    suffix: .ftl  #后缀名
+    content-type: text/html;charset=UTF-8
+    enabled: true
+    cache: false #模板加载路径 按需配置
+    charset: UTF-8 #编码格式
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    template-loader-path: classpath:/templates/
+    expose-spring-macro-helpers: true
+    settings:
+      number_format: #.##
+      template_update_delay: 60
+      default_encoding: UTF-8
+      output_encoding: UTF-8
+      locale: zh_CN
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      date_format: yyyy-MM-dd
+      time_format: HH:mm:ss
+      classic_compatible: true
+      template_exception_handler: ignore
+---
+pay:
+  upload-folder: /data/spupload/
+  alipay:
+    web-pay-timeout: 30m
+    sanbox-flag: 0 #0不启用 1启用沙箱环境
+    sanbox:
+      auth-url: http://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm
+      gateway-url: http://openapi.alipaydev.com/gateway.do
+    release:
+      auth-url: https://openauth.alipay.com/oauth2/publicAppAuthorize.htm
+      gateway-url: https://openapi.alipay.com/gateway.do
+  wechat:
+    release:
+      auth-url: https://open.weixin.qq.com/connect/oauth2/authorize
+      pay-url:  https://api.mch.weixin.qq.com/pay/unifiedorder
+      accesstoken-url: https://api.weixin.qq.com/sns/oauth2/access_token
+      refund-url: https://api.mch.weixin.qq.com/secapi/pay/refund
+      pay-query-url: https://api.mch.weixin.qq.com/pay/orderquery
+      cancel-url: https://api.mch.weixin.qq.com/secapi/pay/reverse
+      micro-pay-url: https://api.mch.weixin.qq.com/pay/micropay
+---
+thread:
+  minThreadPoolSize: 30
+  maxThreadPoolSize: 100
+  queueSize: 10
+  idleTime: 40
+
+
+

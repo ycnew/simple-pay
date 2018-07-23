@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+     <!DOCTYPE mapper 
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn._42pay.simplepay.db.dao.UserDao">
+
+   <resultMap id="userResultMap" type="cn._42pay.simplepay.db.entity.User">
+       <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+       <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+       <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+       <result column="SALT" property="salt" jdbcType="VARCHAR" />
+       <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+       <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+       <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+       <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+       <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+   <select id="select" resultMap="userResultMap">
+      select
+      <choose>
+          <when test="_parameter!=null and _parameter.containsKey('selects') and selects != null">
+               <foreach collection="selects" item="item" index="index" separator="," >a.${item}</foreach>
+          </when>
+          <otherwise>
+                a.*    
+          </otherwise>
+      </choose>
+      from sys_user a 
+       <if test="_parameter!=null and _parameter.containsKey('wheres') and wheres != null">
+           <where>
+          <if test="wheres.userId != null ">  and a.USER_ID = #{wheres.userId,jdbcType=BIGINT}</if>
+          <if test="wheres.loginName != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.LOGIN_NAME like CONCAT(#{wheres.loginName,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.LOGIN_NAME = #{wheres.loginName,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.password != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PASSWORD like CONCAT(#{wheres.password,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PASSWORD = #{wheres.password,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.salt != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.SALT like CONCAT(#{wheres.salt,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.SALT = #{wheres.salt,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.userName != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.USER_NAME like CONCAT(#{wheres.userName,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.USER_NAME = #{wheres.userName,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.email != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.EMAIL like CONCAT(#{wheres.email,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.EMAIL = #{wheres.email,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.mobile != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.MOBILE like CONCAT(#{wheres.mobile,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.MOBILE = #{wheres.mobile,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.beginCreateTime != null ">  and a.CREATE_TIME &gt;= #{wheres.beginCreateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endCreateTime != null "> and a.CREATE_TIME &lt;= #{wheres.endCreateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.beginUpdateTime != null ">  and a.UPDATE_TIME &gt;= #{wheres.beginUpdateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endUpdateTime != null "> and a.UPDATE_TIME &lt;= #{wheres.endUpdateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.otherSql != null and wheres.otherSql !='' ">  and ${wheres.otherSql} </if>
+          </where>
+      </if>
+     <if test="_parameter!=null and _parameter.containsKey('orderColumns') and _parameter.containsKey('isAsc') and orderColumns != null and isAsc != null ">
+            order by   <foreach collection="orderColumns" item="item" index="index"  open="(" separator="," close=")">a.${item}</foreach>  
+           <choose>
+               <when test="isAsc == true">
+                     asc 
+               </when>
+               <otherwise>
+                     desc
+               </otherwise>
+           </choose>
+     </if>
+      <if test="_parameter!=null and _parameter.containsKey('pageInfo') and pageInfo!=null and pageInfo.pageNum != null  and pageInfo.pageSize != null  ">
+               limit #{pageInfo.pageSize,jdbcType=INTEGER} offset ${(pageInfo.pageNum - 1) * pageInfo.pageSize}
+      </if>
+     </select>
+
+
+   <select id="selectById" parameterType="java.lang.String" resultMap="userResultMap">
+         select * from sys_user where user_id = #{id,jdbcType=VARCHAR}
+   </select>
+
+    <select id="selectByIds" parameterType="java.util.List" resultMap="userResultMap">
+         select    *    from sys_user
+         where user_id in  
+         <foreach collection="list" item = "id" open="(" separator="," close=")">
+            #{id}
+         </foreach>
+   </select>
+
+   <select id="selectCount" resultType="Long">
+         select count(*) from sys_user a 
+       <if test="_parameter!=null and _parameter.containsKey('wheres') and wheres != null">
+           <where>
+          <if test="wheres.userId != null ">  and  a.USER_ID = #{wheres.userId,jdbcType=BIGINT}</if>
+          <if test="wheres.loginName != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.LOGIN_NAME like CONCAT(#{wheres.loginName,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.LOGIN_NAME = #{wheres.loginName,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.password != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PASSWORD like CONCAT(#{wheres.password,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PASSWORD = #{wheres.password,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.salt != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.SALT like CONCAT(#{wheres.salt,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.SALT = #{wheres.salt,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.userName != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.USER_NAME like CONCAT(#{wheres.userName,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.USER_NAME = #{wheres.userName,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.email != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.EMAIL like CONCAT(#{wheres.email,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.EMAIL = #{wheres.email,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.mobile != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.MOBILE like CONCAT(#{wheres.mobile,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.MOBILE = #{wheres.mobile,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.beginCreateTime != null ">  and  a.CREATE_TIME &gt;= #{wheres.beginCreateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endCreateTime != null "> and a.CREATE_TIME &lt;= #{wheres.endCreateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.beginUpdateTime != null ">  and  a.UPDATE_TIME &gt;= #{wheres.beginUpdateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endUpdateTime != null "> and a.UPDATE_TIME &lt;= #{wheres.endUpdateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.otherSql != null and wheres.otherSql !='' ">  and ${wheres.otherSql} </if>
+          </where>
+      </if>
+     </select>
+
+   <insert id="insert" parameterType="cn._42pay.simplepay.db.entity.User">
+        insert into sys_user
+           <trim prefix="(" suffix=")" suffixOverrides="," >
+             <if test="userId != null" >
+               USER_ID,
+             </if>
+             <if test="loginName != null" >
+               LOGIN_NAME,
+             </if>
+             <if test="password != null" >
+               PASSWORD,
+             </if>
+             <if test="salt != null" >
+               SALT,
+             </if>
+             <if test="userName != null" >
+               USER_NAME,
+             </if>
+             <if test="email != null" >
+               EMAIL,
+             </if>
+             <if test="mobile != null" >
+               MOBILE,
+             </if>
+             <if test="createTime != null" >
+               CREATE_TIME,
+             </if>
+             <if test="updateTime != null" >
+               UPDATE_TIME,
+             </if>
+           </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides="," >
+             <if test="userId != null" >
+               #{userId,jdbcType=BIGINT},
+             </if>
+             <if test="loginName != null" >
+               #{loginName,jdbcType=VARCHAR},
+             </if>
+             <if test="password != null" >
+               #{password,jdbcType=VARCHAR},
+             </if>
+             <if test="salt != null" >
+               #{salt,jdbcType=VARCHAR},
+             </if>
+             <if test="userName != null" >
+               #{userName,jdbcType=VARCHAR},
+             </if>
+             <if test="email != null" >
+               #{email,jdbcType=VARCHAR},
+             </if>
+             <if test="mobile != null" >
+               #{mobile,jdbcType=VARCHAR},
+             </if>
+             <if test="createTime != null" >
+               #{createTime,jdbcType=TIMESTAMP},
+             </if>
+             <if test="updateTime != null" >
+               #{updateTime,jdbcType=TIMESTAMP},
+             </if>
+           </trim>
+   </insert>
+
+   <update id="update" parameterType="cn._42pay.simplepay.db.entity.User">
+        update sys_user
+        <set>
+           <if test="loginName != null ">LOGIN_NAME = #{loginName,jdbcType=VARCHAR},</if>
+           <if test="password != null ">PASSWORD = #{password,jdbcType=VARCHAR},</if>
+           <if test="salt != null ">SALT = #{salt,jdbcType=VARCHAR},</if>
+           <if test="userName != null ">USER_NAME = #{userName,jdbcType=VARCHAR},</if>
+           <if test="email != null ">EMAIL = #{email,jdbcType=VARCHAR},</if>
+           <if test="mobile != null ">MOBILE = #{mobile,jdbcType=VARCHAR},</if>
+           <if test="createTime != null ">CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},</if>
+           <if test="updateTime != null ">UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},</if>
+        </set>
+          where user_id = #{userId,jdbcType=VARCHAR}
+   </update>
+
+   <delete id="delete" parameterType="cn._42pay.simplepay.db.entity.User">
+     delete from sys_user
+          where user_id = #{userId,jdbcType=VARCHAR}
+   </delete>
+
+   <delete id="deleteByIds" parameterType="java.util.List">
+      delete from sys_user
+          where user_id in 
+          <foreach collection="list" item = "id" open="(" separator="," close=")">
+                #{id}
+          </foreach>
+   </delete>
+
+   <insert id="batchInsert" parameterType="java.util.List">
+        insert into sys_user
+           <trim prefix="(" suffix=")" suffixOverrides="," >
+               USER_ID,
+               LOGIN_NAME,
+               PASSWORD,
+               SALT,
+               USER_NAME,
+               EMAIL,
+               MOBILE,
+               CREATE_TIME,
+               UPDATE_TIME,
+           </trim>
+           VALUES 
+           <foreach collection="list" item="item" index="index" separator="," > 
+               <trim prefix=" (" suffix=")" suffixOverrides="," >
+                #{item.userId,jdbcType=BIGINT},
+                #{item.loginName,jdbcType=VARCHAR},
+                #{item.password,jdbcType=VARCHAR},
+                #{item.salt,jdbcType=VARCHAR},
+                #{item.userName,jdbcType=VARCHAR},
+                #{item.email,jdbcType=VARCHAR},
+                #{item.mobile,jdbcType=VARCHAR},
+                #{item.createTime,jdbcType=TIMESTAMP},
+                #{item.updateTime,jdbcType=TIMESTAMP},
+              </trim>
+           </foreach> 
+   </insert>
+
+</mapper>
