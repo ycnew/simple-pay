@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+     <!DOCTYPE mapper 
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn._42pay.simplepay.db.dao.PaymentJournalDao">
+
+   <resultMap id="paymentJournalResultMap" type="cn._42pay.simplepay.db.entity.PaymentJournal">
+       <result column="PAYMENT_JOURNAL_ID" property="paymentJournalId" jdbcType="BIGINT" />
+       <result column="PAYMENT_DEAL_NO" property="paymentDealNo" jdbcType="VARCHAR" />
+       <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+       <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+       <result column="PAY_APP_ID" property="payAppId" jdbcType="VARCHAR" />
+       <result column="MERCHANT_ID" property="merchantId" jdbcType="VARCHAR" />
+       <result column="MERCHANT_ORDER_NO" property="merchantOrderNo" jdbcType="VARCHAR" />
+       <result column="PAYMENT_DEAL_ID" property="paymentDealId" jdbcType="VARCHAR" />
+       <result column="PAY_STATUS" property="payStatus" jdbcType="INTEGER" />
+       <result column="PAY_CODE" property="payCode" jdbcType="VARCHAR" />
+       <result column="PAY_MODE" property="payMode" jdbcType="INTEGER" />
+       <result column="PAY_AMOUNT" property="payAmount" jdbcType="INTEGER" />
+       <result column="ACCOUNT_AMOUNT" property="accountAmount" jdbcType="INTEGER" />
+       <result column="MEDICARE_AMOUNT" property="medicareAmount" jdbcType="INTEGER" />
+       <result column="INSURANCE_AMOUNT" property="insuranceAmount" jdbcType="INTEGER" />
+       <result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="INTEGER" />
+       <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+       <result column="EXTRA_PARAMS" property="extraParams" jdbcType="VARCHAR" />
+       <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+       <result column="PAY_TIME" property="payTime" jdbcType="TIMESTAMP" />
+       <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+       <result column="DATA_SOURCE" property="dataSource" jdbcType="VARCHAR" />
+   </resultMap>
+
+   <select id="select" resultMap="paymentJournalResultMap">
+      select
+      <choose>
+          <when test="_parameter!=null and _parameter.containsKey('selects') and selects != null">
+               <foreach collection="selects" item="item" index="index" separator="," >a.${item}</foreach>
+          </when>
+          <otherwise>
+                a.*    
+          </otherwise>
+      </choose>
+      from pay_payment_journal a 
+       <if test="_parameter!=null and _parameter.containsKey('wheres') and wheres != null">
+           <where>
+          <if test="wheres.paymentJournalId != null ">  and a.PAYMENT_JOURNAL_ID = #{wheres.paymentJournalId,jdbcType=BIGINT}</if>
+          <if test="wheres.paymentDealNo != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PAYMENT_DEAL_NO like CONCAT(#{wheres.paymentDealNo,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PAYMENT_DEAL_NO = #{wheres.paymentDealNo,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.userId != null ">  and a.USER_ID = #{wheres.userId,jdbcType=BIGINT}</if>
+          <if test="wheres.userName != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.USER_NAME like CONCAT(#{wheres.userName,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.USER_NAME = #{wheres.userName,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.payAppId != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PAY_APP_ID like CONCAT(#{wheres.payAppId,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PAY_APP_ID = #{wheres.payAppId,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.merchantId != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.MERCHANT_ID like CONCAT(#{wheres.merchantId,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.MERCHANT_ID = #{wheres.merchantId,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.merchantOrderNo != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.MERCHANT_ORDER_NO like CONCAT(#{wheres.merchantOrderNo,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.MERCHANT_ORDER_NO = #{wheres.merchantOrderNo,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.paymentDealId != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PAYMENT_DEAL_ID like CONCAT(#{wheres.paymentDealId,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PAYMENT_DEAL_ID = #{wheres.paymentDealId,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.payStatus != null ">  and a.PAY_STATUS = #{wheres.payStatus,jdbcType=INTEGER}</if>
+          <if test="wheres.payCode != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PAY_CODE like CONCAT(#{wheres.payCode,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PAY_CODE = #{wheres.payCode,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.payMode != null ">  and a.PAY_MODE = #{wheres.payMode,jdbcType=INTEGER}</if>
+          <if test="wheres.payAmount != null ">  and a.PAY_AMOUNT = #{wheres.payAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.accountAmount != null ">  and a.ACCOUNT_AMOUNT = #{wheres.accountAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.medicareAmount != null ">  and a.MEDICARE_AMOUNT = #{wheres.medicareAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.insuranceAmount != null ">  and a.INSURANCE_AMOUNT = #{wheres.insuranceAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.totalAmount != null ">  and a.TOTAL_AMOUNT = #{wheres.totalAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.description != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.DESCRIPTION like CONCAT(#{wheres.description,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.DESCRIPTION = #{wheres.description,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.extraParams != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.EXTRA_PARAMS like CONCAT(#{wheres.extraParams,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.EXTRA_PARAMS = #{wheres.extraParams,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.beginCreateTime != null ">  and a.CREATE_TIME &gt;= #{wheres.beginCreateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endCreateTime != null "> and a.CREATE_TIME &lt;= #{wheres.endCreateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.beginPayTime != null ">  and a.PAY_TIME &gt;= #{wheres.beginPayTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endPayTime != null "> and a.PAY_TIME &lt;= #{wheres.endPayTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.beginUpdateTime != null ">  and a.UPDATE_TIME &gt;= #{wheres.beginUpdateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endUpdateTime != null "> and a.UPDATE_TIME &lt;= #{wheres.endUpdateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.dataSource != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.DATA_SOURCE like CONCAT(#{wheres.dataSource,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.DATA_SOURCE = #{wheres.dataSource,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.otherSql != null and wheres.otherSql !='' ">  and ${wheres.otherSql} </if>
+          </where>
+      </if>
+     <if test="_parameter!=null and _parameter.containsKey('orderColumns') and _parameter.containsKey('isAsc') and orderColumns != null and isAsc != null ">
+            order by   <foreach collection="orderColumns" item="item" index="index"  open="(" separator="," close=")">a.${item}</foreach>  
+           <choose>
+               <when test="isAsc == true">
+                     asc 
+               </when>
+               <otherwise>
+                     desc
+               </otherwise>
+           </choose>
+     </if>
+      <if test="_parameter!=null and _parameter.containsKey('pageInfo') and pageInfo!=null and pageInfo.pageNum != null  and pageInfo.pageSize != null  ">
+               limit #{pageInfo.pageSize,jdbcType=INTEGER} offset ${(pageInfo.pageNum - 1) * pageInfo.pageSize}
+      </if>
+     </select>
+
+
+   <select id="selectById" parameterType="java.lang.String" resultMap="paymentJournalResultMap">
+         select * from pay_payment_journal where payment_journal_id = #{id,jdbcType=VARCHAR}
+   </select>
+
+    <select id="selectByIds" parameterType="java.util.List" resultMap="paymentJournalResultMap">
+         select    *    from pay_payment_journal
+         where payment_journal_id in  
+         <foreach collection="list" item = "id" open="(" separator="," close=")">
+            #{id}
+         </foreach>
+   </select>
+
+   <select id="selectCount" resultType="Long">
+         select count(*) from pay_payment_journal a 
+       <if test="_parameter!=null and _parameter.containsKey('wheres') and wheres != null">
+           <where>
+          <if test="wheres.paymentJournalId != null ">  and  a.PAYMENT_JOURNAL_ID = #{wheres.paymentJournalId,jdbcType=BIGINT}</if>
+          <if test="wheres.paymentDealNo != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PAYMENT_DEAL_NO like CONCAT(#{wheres.paymentDealNo,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PAYMENT_DEAL_NO = #{wheres.paymentDealNo,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.userId != null ">  and  a.USER_ID = #{wheres.userId,jdbcType=BIGINT}</if>
+          <if test="wheres.userName != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.USER_NAME like CONCAT(#{wheres.userName,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.USER_NAME = #{wheres.userName,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.payAppId != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PAY_APP_ID like CONCAT(#{wheres.payAppId,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PAY_APP_ID = #{wheres.payAppId,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.merchantId != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.MERCHANT_ID like CONCAT(#{wheres.merchantId,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.MERCHANT_ID = #{wheres.merchantId,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.merchantOrderNo != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.MERCHANT_ORDER_NO like CONCAT(#{wheres.merchantOrderNo,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.MERCHANT_ORDER_NO = #{wheres.merchantOrderNo,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.paymentDealId != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PAYMENT_DEAL_ID like CONCAT(#{wheres.paymentDealId,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PAYMENT_DEAL_ID = #{wheres.paymentDealId,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.payStatus != null ">  and  a.PAY_STATUS = #{wheres.payStatus,jdbcType=INTEGER}</if>
+          <if test="wheres.payCode != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.PAY_CODE like CONCAT(#{wheres.payCode,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.PAY_CODE = #{wheres.payCode,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.payMode != null ">  and  a.PAY_MODE = #{wheres.payMode,jdbcType=INTEGER}</if>
+          <if test="wheres.payAmount != null ">  and  a.PAY_AMOUNT = #{wheres.payAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.accountAmount != null ">  and  a.ACCOUNT_AMOUNT = #{wheres.accountAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.medicareAmount != null ">  and  a.MEDICARE_AMOUNT = #{wheres.medicareAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.insuranceAmount != null ">  and  a.INSURANCE_AMOUNT = #{wheres.insuranceAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.totalAmount != null ">  and  a.TOTAL_AMOUNT = #{wheres.totalAmount,jdbcType=INTEGER}</if>
+          <if test="wheres.description != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.DESCRIPTION like CONCAT(#{wheres.description,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.DESCRIPTION = #{wheres.description,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.extraParams != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.EXTRA_PARAMS like CONCAT(#{wheres.extraParams,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.EXTRA_PARAMS = #{wheres.extraParams,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.beginCreateTime != null ">  and  a.CREATE_TIME &gt;= #{wheres.beginCreateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endCreateTime != null "> and a.CREATE_TIME &lt;= #{wheres.endCreateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.beginPayTime != null ">  and  a.PAY_TIME &gt;= #{wheres.beginPayTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endPayTime != null "> and a.PAY_TIME &lt;= #{wheres.endPayTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.beginUpdateTime != null ">  and  a.UPDATE_TIME &gt;= #{wheres.beginUpdateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.endUpdateTime != null "> and a.UPDATE_TIME &lt;= #{wheres.endUpdateTime,jdbcType=TIMESTAMP}</if>
+          <if test="wheres.dataSource != null  "> 
+            <choose> 
+                <when test="_parameter.containsKey('isLike') and isLike != null and isLike == true" > 
+                    and a.DATA_SOURCE like CONCAT(#{wheres.dataSource,jdbcType=VARCHAR},'%') 
+                </when> 
+                <otherwise> 
+                    and a.DATA_SOURCE = #{wheres.dataSource,jdbcType=VARCHAR} 
+                </otherwise> 
+            </choose> 
+          </if> 
+          <if test="wheres.otherSql != null and wheres.otherSql !='' ">  and ${wheres.otherSql} </if>
+          </where>
+      </if>
+     </select>
+
+   <insert id="insert" parameterType="cn._42pay.simplepay.db.entity.PaymentJournal">
+        insert into pay_payment_journal
+           <trim prefix="(" suffix=")" suffixOverrides="," >
+             <if test="paymentJournalId != null" >
+               PAYMENT_JOURNAL_ID,
+             </if>
+             <if test="paymentDealNo != null" >
+               PAYMENT_DEAL_NO,
+             </if>
+             <if test="userId != null" >
+               USER_ID,
+             </if>
+             <if test="userName != null" >
+               USER_NAME,
+             </if>
+             <if test="payAppId != null" >
+               PAY_APP_ID,
+             </if>
+             <if test="merchantId != null" >
+               MERCHANT_ID,
+             </if>
+             <if test="merchantOrderNo != null" >
+               MERCHANT_ORDER_NO,
+             </if>
+             <if test="paymentDealId != null" >
+               PAYMENT_DEAL_ID,
+             </if>
+             <if test="payStatus != null" >
+               PAY_STATUS,
+             </if>
+             <if test="payCode != null" >
+               PAY_CODE,
+             </if>
+             <if test="payMode != null" >
+               PAY_MODE,
+             </if>
+             <if test="payAmount != null" >
+               PAY_AMOUNT,
+             </if>
+             <if test="accountAmount != null" >
+               ACCOUNT_AMOUNT,
+             </if>
+             <if test="medicareAmount != null" >
+               MEDICARE_AMOUNT,
+             </if>
+             <if test="insuranceAmount != null" >
+               INSURANCE_AMOUNT,
+             </if>
+             <if test="totalAmount != null" >
+               TOTAL_AMOUNT,
+             </if>
+             <if test="description != null" >
+               DESCRIPTION,
+             </if>
+             <if test="extraParams != null" >
+               EXTRA_PARAMS,
+             </if>
+             <if test="createTime != null" >
+               CREATE_TIME,
+             </if>
+             <if test="payTime != null" >
+               PAY_TIME,
+             </if>
+             <if test="updateTime != null" >
+               UPDATE_TIME,
+             </if>
+             <if test="dataSource != null" >
+               DATA_SOURCE,
+             </if>
+           </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides="," >
+             <if test="paymentJournalId != null" >
+               #{paymentJournalId,jdbcType=BIGINT},
+             </if>
+             <if test="paymentDealNo != null" >
+               #{paymentDealNo,jdbcType=VARCHAR},
+             </if>
+             <if test="userId != null" >
+               #{userId,jdbcType=BIGINT},
+             </if>
+             <if test="userName != null" >
+               #{userName,jdbcType=VARCHAR},
+             </if>
+             <if test="payAppId != null" >
+               #{payAppId,jdbcType=VARCHAR},
+             </if>
+             <if test="merchantId != null" >
+               #{merchantId,jdbcType=VARCHAR},
+             </if>
+             <if test="merchantOrderNo != null" >
+               #{merchantOrderNo,jdbcType=VARCHAR},
+             </if>
+             <if test="paymentDealId != null" >
+               #{paymentDealId,jdbcType=VARCHAR},
+             </if>
+             <if test="payStatus != null" >
+               #{payStatus,jdbcType=INTEGER},
+             </if>
+             <if test="payCode != null" >
+               #{payCode,jdbcType=VARCHAR},
+             </if>
+             <if test="payMode != null" >
+               #{payMode,jdbcType=INTEGER},
+             </if>
+             <if test="payAmount != null" >
+               #{payAmount,jdbcType=INTEGER},
+             </if>
+             <if test="accountAmount != null" >
+               #{accountAmount,jdbcType=INTEGER},
+             </if>
+             <if test="medicareAmount != null" >
+               #{medicareAmount,jdbcType=INTEGER},
+             </if>
+             <if test="insuranceAmount != null" >
+               #{insuranceAmount,jdbcType=INTEGER},
+             </if>
+             <if test="totalAmount != null" >
+               #{totalAmount,jdbcType=INTEGER},
+             </if>
+             <if test="description != null" >
+               #{description,jdbcType=VARCHAR},
+             </if>
+             <if test="extraParams != null" >
+               #{extraParams,jdbcType=VARCHAR},
+             </if>
+             <if test="createTime != null" >
+               #{createTime,jdbcType=TIMESTAMP},
+             </if>
+             <if test="payTime != null" >
+               #{payTime,jdbcType=TIMESTAMP},
+             </if>
+             <if test="updateTime != null" >
+               #{updateTime,jdbcType=TIMESTAMP},
+             </if>
+             <if test="dataSource != null" >
+               #{dataSource,jdbcType=VARCHAR},
+             </if>
+           </trim>
+   </insert>
+
+   <update id="update" parameterType="cn._42pay.simplepay.db.entity.PaymentJournal">
+        update pay_payment_journal
+        <set>
+           <if test="paymentDealNo != null ">PAYMENT_DEAL_NO = #{paymentDealNo,jdbcType=VARCHAR},</if>
+           <if test="userId != null ">USER_ID = #{userId,jdbcType=BIGINT},</if>
+           <if test="userName != null ">USER_NAME = #{userName,jdbcType=VARCHAR},</if>
+           <if test="payAppId != null ">PAY_APP_ID = #{payAppId,jdbcType=VARCHAR},</if>
+           <if test="merchantId != null ">MERCHANT_ID = #{merchantId,jdbcType=VARCHAR},</if>
+           <if test="merchantOrderNo != null ">MERCHANT_ORDER_NO = #{merchantOrderNo,jdbcType=VARCHAR},</if>
+           <if test="paymentDealId != null ">PAYMENT_DEAL_ID = #{paymentDealId,jdbcType=VARCHAR},</if>
+           <if test="payStatus != null ">PAY_STATUS = #{payStatus,jdbcType=INTEGER},</if>
+           <if test="payCode != null ">PAY_CODE = #{payCode,jdbcType=VARCHAR},</if>
+           <if test="payMode != null ">PAY_MODE = #{payMode,jdbcType=INTEGER},</if>
+           <if test="payAmount != null ">PAY_AMOUNT = #{payAmount,jdbcType=INTEGER},</if>
+           <if test="accountAmount != null ">ACCOUNT_AMOUNT = #{accountAmount,jdbcType=INTEGER},</if>
+           <if test="medicareAmount != null ">MEDICARE_AMOUNT = #{medicareAmount,jdbcType=INTEGER},</if>
+           <if test="insuranceAmount != null ">INSURANCE_AMOUNT = #{insuranceAmount,jdbcType=INTEGER},</if>
+           <if test="totalAmount != null ">TOTAL_AMOUNT = #{totalAmount,jdbcType=INTEGER},</if>
+           <if test="description != null ">DESCRIPTION = #{description,jdbcType=VARCHAR},</if>
+           <if test="extraParams != null ">EXTRA_PARAMS = #{extraParams,jdbcType=VARCHAR},</if>
+           <if test="createTime != null ">CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},</if>
+           <if test="payTime != null ">PAY_TIME = #{payTime,jdbcType=TIMESTAMP},</if>
+           <if test="updateTime != null ">UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},</if>
+           <if test="dataSource != null ">DATA_SOURCE = #{dataSource,jdbcType=VARCHAR},</if>
+        </set>
+          where payment_journal_id = #{paymentJournalId,jdbcType=VARCHAR}
+   </update>
+
+   <delete id="delete" parameterType="cn._42pay.simplepay.db.entity.PaymentJournal">
+     delete from pay_payment_journal
+          where payment_journal_id = #{paymentJournalId,jdbcType=VARCHAR}
+   </delete>
+
+   <delete id="deleteByIds" parameterType="java.util.List">
+      delete from pay_payment_journal
+          where payment_journal_id in 
+          <foreach collection="list" item = "id" open="(" separator="," close=")">
+                #{id}
+          </foreach>
+   </delete>
+
+   <insert id="batchInsert" parameterType="java.util.List">
+        insert into pay_payment_journal
+           <trim prefix="(" suffix=")" suffixOverrides="," >
+               PAYMENT_JOURNAL_ID,
+               PAYMENT_DEAL_NO,
+               USER_ID,
+               USER_NAME,
+               PAY_APP_ID,
+               MERCHANT_ID,
+               MERCHANT_ORDER_NO,
+               PAYMENT_DEAL_ID,
+               PAY_STATUS,
+               PAY_CODE,
+               PAY_MODE,
+               PAY_AMOUNT,
+               ACCOUNT_AMOUNT,
+               MEDICARE_AMOUNT,
+               INSURANCE_AMOUNT,
+               TOTAL_AMOUNT,
+               DESCRIPTION,
+               EXTRA_PARAMS,
+               CREATE_TIME,
+               PAY_TIME,
+               UPDATE_TIME,
+               DATA_SOURCE,
+           </trim>
+           VALUES 
+           <foreach collection="list" item="item" index="index" separator="," > 
+               <trim prefix=" (" suffix=")" suffixOverrides="," >
+                #{item.paymentJournalId,jdbcType=BIGINT},
+                #{item.paymentDealNo,jdbcType=VARCHAR},
+                #{item.userId,jdbcType=BIGINT},
+                #{item.userName,jdbcType=VARCHAR},
+                #{item.payAppId,jdbcType=VARCHAR},
+                #{item.merchantId,jdbcType=VARCHAR},
+                #{item.merchantOrderNo,jdbcType=VARCHAR},
+                #{item.paymentDealId,jdbcType=VARCHAR},
+                #{item.payStatus,jdbcType=INTEGER},
+                #{item.payCode,jdbcType=VARCHAR},
+                #{item.payMode,jdbcType=INTEGER},
+                #{item.payAmount,jdbcType=INTEGER},
+                #{item.accountAmount,jdbcType=INTEGER},
+                #{item.medicareAmount,jdbcType=INTEGER},
+                #{item.insuranceAmount,jdbcType=INTEGER},
+                #{item.totalAmount,jdbcType=INTEGER},
+                #{item.description,jdbcType=VARCHAR},
+                #{item.extraParams,jdbcType=VARCHAR},
+                #{item.createTime,jdbcType=TIMESTAMP},
+                #{item.payTime,jdbcType=TIMESTAMP},
+                #{item.updateTime,jdbcType=TIMESTAMP},
+                #{item.dataSource,jdbcType=VARCHAR},
+              </trim>
+           </foreach> 
+   </insert>
+
+</mapper>
