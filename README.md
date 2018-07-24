@@ -53,6 +53,23 @@ QQ交流群：826351281
 ├----static			静态资源<br/>
 ├----templates	        页面模板<br/>
 
+#### 聚合通道(PAY_CODE说明)
+```
+"WX_H5","微信手机网站H5支付"(未实现)
+"ALIPAY_WEB","支付宝电脑网站支付"
+```
+```
+"WX_JSAPI","微信公众号支付"
+"ALIPAY_WAP","支付宝手机网站支付"
+```
+```
+"WX_MICROPAY","微信刷卡付"
+"ALIPAY_BARPAY","支付宝条码支付"
+```
+```
+个人转账聚合没有PAY_CODE
+```
+
 #### 聚合支付URL说明
 
 一：WAP支付（跳转界面，需要输入金额）
@@ -96,7 +113,7 @@ http://域名/mobile/payment/personalTransfer?userId=用户ID
 
 #### 商户回调签名说明
 收到第三方支付回调后，会转换成统一的参数，对参数进行ASCII码升序排序，取里面的值+设置到后台的Key，用MD5算一个签名<br>
-具体参考类ReportMechant上的buildNotifySign方法
-
+具体参考类ReportMechant上的buildNotifySign方法<br>
+商户收到报文之后，成功需要应答字符串“SUCCESS”，失败应答字符串 “FAILURE”
 #### 开源说明
 * 本系统100%开源，遵守Apache2.0协议
