@@ -162,7 +162,7 @@ public abstract class AbstractHandler implements IPayHandler {
 	}
 
 	/**
-	 * 循环查询支付宝，查看交易是否成功
+	 * 循环查询第三方支付，查看交易是否成功
 	 * @param barcodePayRequestBo
 	 * @return
 	 */
