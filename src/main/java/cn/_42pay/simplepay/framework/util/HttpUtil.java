@@ -35,6 +35,11 @@ public class HttpUtil {
 	private static final String USER_ID_STR="userId";
 
 	/**
+	 * httpclient对象.
+	 */
+	private static final 	OkHttpClient client = new OkHttpClient();
+
+	/**
 	 * 获取请求的URL地址
 	 * @param request
 	 * @return
@@ -141,7 +146,6 @@ public class HttpUtil {
 	 * @throws IOException
 	 */
 	public static String get(String url) throws IOException {
-		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().url(url).build();
 		Response response = client.newCall(request).execute();
 		return response.body().string();
@@ -156,7 +160,6 @@ public class HttpUtil {
 	 * @throws IOException
 	 */
 	public static String post(String content, String url) throws IOException {
-		OkHttpClient client = new OkHttpClient();
 		RequestBody body = RequestBody.create(MediaType.parse(HttpContentType.TEXTHTML.getType()), content);
 		Request request = new Request.Builder().url(url).post(body).build();
 		Response response = client.newCall(request).execute();
@@ -172,7 +175,6 @@ public class HttpUtil {
 	 * @throws IOException
 	 */
 	public static String post(String content, String url, HttpContentType contentType) throws IOException {
-		OkHttpClient client = new OkHttpClient();
 		RequestBody body = RequestBody.create(MediaType.parse(contentType.getType()), content);
 		Request request = new Request.Builder().url(url).post(body).build();
 		Response response = client.newCall(request).execute();

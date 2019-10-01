@@ -76,7 +76,7 @@ QQ交流群：826351281
 ```
 http://域名/mobile/order/webPayOrderInfo?userId=用户ID
 ```
-![输入图片说明](http://www.42pay.cn/1.PNG "简单付，Wap支付")<br/>
+![输入图片说明](https://www.42pay.cn/images/1.PNG "简单付，Wap支付")<br/>
 二：WAP支付(直接唤起支付宝或微信收银台)
 ```
 http://域名/mobile/order/webPayOrderInfo?userId=用户ID&payAmount=金额(最小单位：分)
@@ -85,7 +85,7 @@ http://域名/mobile/order/webPayOrderInfo?userId=用户ID&payAmount=金额(最�
 ```
 http://域名/mobile/order/barcodePayOrderInfo?userId=用户ID
 ```
-![输入图片说明](http://www.42pay.cn/2.PNG "简单付，条码支付")<br/>
+![输入图片说明](https://www.42pay.cn/images/2.PNG "简单付，条码支付")<br/>
 四：条码支付（直接扣款）
 ```
 http://域名//mobile/order/barcodePayOrderInfo?userId=用户ID&payAmount=金额(最小单位：分)&barcode=支付条码
@@ -101,15 +101,15 @@ http://域名/mobile/payment/personalTransfer?userId=用户ID
 三：直接执行java -jar -server simple-pay-0.0.1-SNAPSHOT.jar<br>
 四：端口默认监听在7878上面,访问http://[域名|ip]:端口<br>
 五：注册用户<br>
-![输入图片说明](http://www.42pay.cn/3.PNG "简单付，注册")<br/>
+![输入图片说明](https://www.42pay.cn/images/3.PNG "简单付，注册")<br/>
 六：配置微信支付参数<br>
-![输入图片说明](http://www.42pay.cn/4.PNG "简单付，微信配置")<br/>
+![输入图片说明](https://www.42pay.cn/images/4.PNG "简单付，微信配置")<br/>
 七：配置支付宝支付参数<br>
-![输入图片说明](http://www.42pay.cn/5.PNG "简单付，支付宝配置")<br/>
+![输入图片说明](https://www.42pay.cn/images/5.PNG "简单付，支付宝配置")<br/>
 八：获取个人支付二维码<br>
-![输入图片说明](http://www.42pay.cn/6.PNG "简单付，获取个人二维码")<br/>
+![输入图片说明](https://www.42pay.cn/images/6.PNG "简单付，获取个人二维码")<br/>
 九：查看交易记录<br>
-![输入图片说明](http://www.42pay.cn/7.PNG "简单付，查看交易记录")<br/>
+![输入图片说明](https://www.42pay.cn/images/7.PNG "简单付，查看交易记录")<br/>
 
 #### 商户回调签名说明
 收到第三方支付回调后，会转换成统一的参数，对参数进行ASCII码升序排序，取里面的值+设置到后台的Key，用MD5算一个签名<br>
